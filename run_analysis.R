@@ -35,8 +35,6 @@ list <- list(testsub,testact,testset)
 testset <- join_all(list)
 testset <- full_join(activity, testset)
 testset <- arrange(testset,id)
-testgood <- testset[,c(1:4, featureNameMeanStd+4)]
-names(testgood) <- c(names(testgood)[1:4], featureName$V2[featureNameMeanStd])
 
 
 ##Loading and tidying up train data
@@ -59,6 +57,13 @@ list <- list(trainsub,trainact,trainset)
 trainset <- join_all(list)
 trainset <- full_join(activity, trainset)
 trainset <- arrange(trainset,id)
-traingood <- trainset[,c(1:4, featureNameMeanStd+4)]
-names(traingood) <- c(names(traingood)[1:4], featureName$V2[featureNameMeanStd])
-traingood[1:6,1:7]
+
+
+##merging test and train data
+alldata <- rbind(testset,trainset)
+
+##Extracting only the measurements on the mean and standard deviation 
+##for each measurement.
+MeanStdData <- alldata[,c(1:4, featureNameMeanStd+4)]
+names(MeanStdData) <- c(names(MeanStdData)[1:4], featureName$V2[featureNameMeanStd])
+
