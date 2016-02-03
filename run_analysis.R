@@ -15,10 +15,9 @@ featureNameMeanStd <- grep(".*(mean|std).*", featureName$V2)
 activity <- read.table(".//UCI HAR Dataset/activity_labels.txt")
 names(activity) <- c("ActivityLable", "ActivityName")
 
-##Load test data
+##Loading and tidying up test data
 ###set
 testset <- read.table(".//UCI HAR Dataset/test/X_test.txt")
-colnames(testset) <- featureName$V2
 testset <- mutate(testset, id = 1:length(testset$V1))
 ###activity
 testact <- read.table(".//UCI HAR Dataset/test/y_test.txt")
@@ -38,5 +37,28 @@ testset <- full_join(activity, testset)
 testset <- arrange(testset,id)
 testgood <- testset[,c(1:4, featureNameMeanStd+4)]
 names(testgood) <- c(names(testgood)[1:4], featureName$V2[featureNameMeanStd])
-dim(testgood)
-head(testgood)
+
+
+##Loading and tidying up train data
+###set
+trainset <- read.table(".//UCI HAR Dataset/train/X_train.txt")
+idvalue <- (length(testset$V1)+1):(length(testset$V1)+length(trainset$V1))
+trainset <- mutate(trainset, id = idvalue)
+###activity
+trainact <- read.table(".//UCI HAR Dataset/train/y_train.txt")
+trainact <- as.data.frame(trainact)
+names(trainact) <- "ActivityLable"
+trainact <- mutate(trainact, id = idvalue)
+###Subjects
+trainsub <- read.table(".//UCI HAR Dataset/train/subject_train.txt")
+trainsub <- as.data.frame(trainsub)
+names(trainsub) <- "SubjectCode"
+trainsub <- mutate(trainsub, id = idvalue)
+###merging all test data
+list <- list(trainsub,trainact,trainset)
+trainset <- join_all(list)
+trainset <- full_join(activity, trainset)
+trainset <- arrange(trainset,id)
+traingood <- trainset[,c(1:4, featureNameMeanStd+4)]
+names(traingood) <- c(names(traingood)[1:4], featureName$V2[featureNameMeanStd])
+traingood[1:6,1:7]
