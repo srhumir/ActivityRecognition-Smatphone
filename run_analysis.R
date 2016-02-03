@@ -36,5 +36,7 @@ list <- list(testsub,testact,testset)
 testset <- join_all(list)
 testset <- full_join(activity, testset)
 testset <- arrange(testset,id)
-testset[1:6,1:6]
-
+testgood <- testset[,c(1:4, featureNameMeanStd+4)]
+names(testgood) <- c(names(testgood)[1:4], featureName$V2[featureNameMeanStd])
+dim(testgood)
+head(testgood)
