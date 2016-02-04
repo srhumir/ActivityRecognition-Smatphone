@@ -9,6 +9,8 @@ library(plyr)
 
 ##load lables and extract the values related to mean ans std
 featureName <- read.table("./UCI HAR Dataset/features.txt", colClasses = "character" )
+##I noted an extra repeat in Body and removed it.
+featureName$V2 <- gsub("BodyBody", "Body", featureName$V2)
 featureNameMeanStd <- grep(".*(mean|std).*", featureName$V2)
 
 ##load activities labels and names
@@ -66,4 +68,12 @@ alldata <- rbind(testset,trainset)
 ##for each measurement.
 MeanStdData <- alldata[,c(1:4, featureNameMeanStd+4)]
 names(MeanStdData) <- c(names(MeanStdData)[1:4], featureName$V2[featureNameMeanStd])
+MeanStdData <- MeanStdData[,c(4,(1:ncol(MeanStdData))[-4])] #move id to first column
 
+##write final dataset to file
+###dataset file
+write.table(MeanStdData, file = "./ActivityRecognition-Smatphone.txt", row.names = FALSE)
+###feature file
+write.table(cbind(1:length(featureNameMeanStd), featureName$V2[featureNameMeanStd]),
+            file = "./smartphone/features.txt",
+            row.names = FALSE, col.names = FALSE, quote = FALSE)
