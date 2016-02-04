@@ -1,7 +1,7 @@
 # ActivityRecognition-Smatphone
 Tidying up the data set of activity recognition for smartphone created by Jorge L. Reyes-Ortiz, Alessandro Ghio, Luca Oneto, Davide Anguita. November 2012.
 
-#How to rum the code.
+#How to rum the code
 
 - Make sure that packages "dplyr" and "plyr" are installed.
 
