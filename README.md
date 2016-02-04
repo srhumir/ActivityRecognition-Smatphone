@@ -1,6 +1,12 @@
 # ActivityRecognition-Smatphone
 Tidying up the data set of activity recognition for smartphone created by Jorge L. Reyes-Ortiz, Alessandro Ghio, Luca Oneto, Davide Anguita. November 2012.
 
+#How to rum the code.
+
+- Make sure that packages "dplyr" and "plyr" are installed.
+
+- Unzip the source data set inot your working directory so that he data file are in "UCI HAR Dataset" folder and run the code. 
+
 # Describtion of the experiment and files
 =================================================================
 ##A modifiction of:

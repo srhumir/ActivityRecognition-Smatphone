@@ -3,7 +3,6 @@
 # we have to merge all of then into a single dataset with meaingfull names.
 #Then the required data will be extracted.
 ##load required packages
-library(data.table)
 library(dplyr)
 library(plyr)
 
@@ -31,7 +30,6 @@ testsub <- read.table(".//UCI HAR Dataset/test/subject_test.txt")
 testsub <- as.data.frame(testsub)
 names(testsub) <- "SubjectCode"
 testsub <- mutate(testsub, id = 1:length(testsub$SubjectCode))
-head(testsub)
 ###merging all test data
 list <- list(testsub,testact,testset)
 testset <- join_all(list)
